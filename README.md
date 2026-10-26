@@ -196,6 +196,10 @@ Lighthouse 12 against `vite preview` (no compression; Vercel adds it):
 Mobile: LCP 2.3 s, TBT 80 ms, CLS 0. Before the prerender, the title waited
 for React and LCP was 3.8 s.
 
+Against the live deploy (https://cordillera-chile.vercel.app, 2026-10-25):
+desktop 100/100/100/100, mobile 93/100/100/100 (LCP 2.4 s, TBT 80 ms, CLS 0),
+and axe still at 0 violations in all five builds.
+
 ---
 
 ## Running it
