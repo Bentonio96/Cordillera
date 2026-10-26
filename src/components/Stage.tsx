@@ -113,7 +113,12 @@ export function Stage() {
                   el.style.opacity = '0'
                   return
                 }
-                el.style.opacity = String(near)
+                // Labels are centred on their peak; fade them out before
+                // half a label would leave the screen instead of cutting it.
+                const width = el.firstElementChild?.clientWidth ?? 0
+                const room = Math.min(p.x, canvas.clientWidth - p.x) - width / 2
+                const edge = Math.min(1, Math.max(0, room / 24))
+                el.style.opacity = String(near * edge)
                 el.style.transform = `translate3d(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px, 0)`
               })
             },
@@ -179,7 +184,7 @@ export function Stage() {
         </div>
       ))}
       <div
-        className={`etiqueta absolute bottom-5 left-4 hidden gap-3 md:flex text-niebla transition-opacity duration-1000 md:bottom-8 md:left-8 amplio:right-20 amplio:left-auto ${ready ? 'opacity-100' : 'opacity-0'}`}
+        className={`etiqueta absolute right-20 bottom-8 hidden gap-3 text-niebla transition-opacity duration-1000 amplio:flex ${ready ? 'opacity-100' : 'opacity-0'}`}
         title={t(COPY.readout.label)}
       >
         <span ref={latRef} className="tabular text-nieve">
