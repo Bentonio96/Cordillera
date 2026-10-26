@@ -37,13 +37,10 @@ export function Chapter({ chapter }: { chapter: ChapterData }) {
       <p className="etiqueta mt-6 text-niebla tabular">{chapter.range}</p>
 
       <dl className="mt-8 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-        {chapter.facts.map((fact) => {
+        {chapter.facts.map((fact, index) => {
           const ref = citationNumber(fact.source)
           return (
-            <div
-              key={`${fact.source}-${t(fact.label)}`}
-              className="relative pt-4"
-            >
+            <div key={`${fact.source}-${index}`} className="relative pt-4">
               <span
                 data-rule
                 aria-hidden="true"

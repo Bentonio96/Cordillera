@@ -1,4 +1,4 @@
-import type { RefObject } from 'react'
+import { useEffect, useRef, type RefObject } from 'react'
 import { MQ, ScrollTrigger, gsap, useGSAP } from '../lib/gsap'
 
 /**
@@ -15,6 +15,13 @@ export function useReveal(
   scope: RefObject<HTMLElement | null>,
   format: (value: number) => string,
 ) {
+  // Read through a ref: switching language must not tear down and rebuild
+  // the timelines (that left already-played reveals stuck at their start).
+  const formatRef = useRef(format)
+  useEffect(() => {
+    formatRef.current = format
+  }, [format])
+
   useGSAP(
     () => {
       const mm = gsap.matchMedia()
@@ -46,24 +53,27 @@ export function useReveal(
         root.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
           const target = Number(el.dataset.count)
           const state = { value: 0 }
-          el.textContent = format(0)
+          // Write to React's own text node, not textContent: React keeps a
+          // reference to it and updates it when the language changes.
+          const text = el.firstChild
+          if (!(text instanceof Text)) return
+          const write = (value: number) => {
+            text.nodeValue = formatRef.current(value)
+          }
+          write(0)
           gsap.to(state, {
             value: target,
             duration: 2.2,
             ease: 'power3.out',
             scrollTrigger: trigger,
-            onUpdate: () => {
-              el.textContent = format(Math.round(state.value))
-            },
-            onComplete: () => {
-              el.textContent = format(target)
-            },
+            onUpdate: () => write(Math.round(state.value)),
+            onComplete: () => write(target),
           })
         })
         ScrollTrigger.refresh()
       })
       return () => mm.revert()
     },
-    { scope, dependencies: [format] },
+    { scope },
   )
 }
