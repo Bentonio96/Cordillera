@@ -1,0 +1,184 @@
+@import 'tailwindcss';
+
+/*
+ * «Basalto»: the range at night, lit by its own snow.
+ *
+ * Ink is warm basalt, never pure black; text is snow. One accent, glacier
+ * blue, and it is reserved for what you can touch or what the instrument is
+ * pointing at (focus rings, links, the latitude cursor). Ochre is structural
+ * only: rules and small labels, never a button.
+ *
+ * Contrast measured on --color-basalto (#0a0b0d):
+ *   nieve    #eef1f3  18.1:1
+ *   niebla   #a7adb4   8.6:1
+ *   ocre     #c99566   7.4:1
+ *   glaciar  #9fd6e4  12.1:1
+ */
+/* Wide enough and tall enough for a chapter to hold still beside the relief. */
+@custom-variant amplio (@media (min-width: 64rem) and (min-height: 42rem));
+
+@theme {
+  --color-basalto: #0a0b0d;
+  --color-ceniza: #141619;
+  --color-nieve: #eef1f3;
+  --color-niebla: #a7adb4;
+  --color-ocre: #c99566;
+  --color-glaciar: #9fd6e4;
+  --color-linea: rgb(238 241 243 / 0.16);
+
+  --font-sans: 'Inter Tight Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --ease-cine: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    background: var(--color-basalto);
+    color: var(--color-nieve);
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+    /* Decorative scrims bleed past the gutter; on phones anything wider than
+       the screen widens the layout viewport itself, header included. */
+    overflow-x: clip;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-weight: 330;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-glaciar);
+    color: var(--color-basalto);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-glaciar);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+@layer components {
+  /* The sky behind the transparent canvas: a cold zenith over a warm haze,
+     like the hour after sunset over the Andes. Static: the terrain moves. */
+  .cielo {
+    background:
+      radial-gradient(
+        120% 70% at 50% 108%,
+        rgb(196 120 72 / 0.22),
+        transparent 60%
+      ),
+      radial-gradient(
+        90% 60% at 80% -10%,
+        rgb(70 110 140 / 0.24),
+        transparent 70%
+      ),
+      linear-gradient(180deg, #07090c 0%, #0c0d10 55%, #120f0d 100%);
+  }
+
+  /* Fine film grain over everything, so flat ink never reads as a screen
+     that is off. A static SVG noise: no animation, no blend mode. */
+  .grano::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.075;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Text sits on the terrain; this scrim guarantees AA wherever the camera
+     happens to be. Solid at the text, fading out towards the relief. */
+  .velo-izq {
+    background: linear-gradient(
+      90deg,
+      rgb(10 11 13 / 0.92) 0%,
+      rgb(10 11 13 / 0.78) 55%,
+      rgb(10 11 13 / 0) 100%
+    );
+  }
+
+  .velo-abajo {
+    background: linear-gradient(
+      0deg,
+      rgb(10 11 13 / 0.95) 0%,
+      rgb(10 11 13 / 0.85) 70%,
+      rgb(10 11 13 / 0) 100%
+    );
+  }
+
+  .display {
+    font-weight: 260;
+    letter-spacing: -0.045em;
+    line-height: 0.92;
+  }
+
+  .etiqueta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* A word that rises out of its own line. Only transform animates. */
+  .linea-mascara {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+}
+
+/* The hero's entrance is CSS, so it plays before any JS arrives. */
+@keyframes subir {
+  from {
+    transform: translateY(105%);
+  }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+}
+
+.entrada-subir {
+  animation: subir 1.6s var(--ease-cine) both;
+}
+
+.entrada-aparecer {
+  animation: aparecer 1.8s var(--ease-cine) 0.5s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html[data-reduced] *,
+html[data-reduced] *::before,
+html[data-reduced] *::after {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+}
