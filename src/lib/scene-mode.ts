@@ -15,11 +15,17 @@ export const SceneModeContext = createContext<{
 
 export const useSceneMode = () => use(SceneModeContext)
 
+let webgl: boolean | null = null
+
+/** Probed once; the prerendered HTML assumes it is there. */
 export function webglAvailable(): boolean {
-  try {
-    const canvas = document.createElement('canvas')
-    return canvas.getContext('webgl2') !== null
-  } catch {
-    return false
+  if (typeof document === 'undefined') return true
+  if (webgl === null) {
+    try {
+      webgl = document.createElement('canvas').getContext('webgl2') !== null
+    } catch {
+      webgl = false
+    }
   }
+  return webgl
 }

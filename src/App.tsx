@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+} from 'react'
 import { Header } from './components/Header'
 import { LatitudeRail } from './components/LatitudeRail'
 import { SmoothScroll } from './components/SmoothScroll'
@@ -15,12 +21,18 @@ import { LanguageProvider } from './i18n/LanguageProvider'
 import { useLanguage } from './i18n/useLanguage'
 import { SceneModeContext, webglAvailable } from './lib/scene-mode'
 
+const noSubscription = () => () => {}
+
 function Journey() {
   const { t } = useLanguage()
   const reduced = useReducedMotion()
   const [failed, setFailed] = useState(false)
   const fail = useCallback(() => setFailed(true), [])
-  const supported = useMemo(() => webglAvailable(), [])
+  const supported = useSyncExternalStore(
+    noSubscription,
+    webglAvailable,
+    () => true,
+  )
   const mode = reduced || failed || !supported ? 'posters' : 'relief'
   const scene = useMemo(() => ({ mode, fail }) as const, [mode, fail])
   useJourneyTracker()

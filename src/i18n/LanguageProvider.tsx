@@ -1,6 +1,7 @@
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -34,7 +35,15 @@ function detectInitialLang(): Lang {
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(detectInitialLang)
+  // The HTML is prerendered in Spanish; the stored or browser language is
+  // applied in a layout effect, after hydration but before the first paint,
+  // so an English reader never sees Spanish and hydration never mismatches.
+  const [lang, setLangState] = useState<Lang>('es')
+  useLayoutEffect(() => {
+    // Intentional: the stored language only exists on the client.
+    // eslint-disable-next-line react/set-state-in-effect
+    setLangState(detectInitialLang())
+  }, [])
 
   const setLang = useCallback((next: Lang) => {
     setLangState(next)
