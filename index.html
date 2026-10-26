@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0A0B0D" />
+    <meta name="color-scheme" content="dark" />
+
+    <title>Cordillera — Los Andes de Chile, de norte a sur</title>
+    <meta
+      name="description"
+      content="Un vuelo sobre el relieve real de los Andes chilenos, del altiplano y el Ojos del Salado a los volcanes del sur y los campos de hielo de la Patagonia. Bilingüe, con datos y fuentes."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Cordillera — Los Andes de Chile, de norte a sur" />
+    <meta
+      property="og:description"
+      content="4.270 km de relieve real: altiplano, Ojos del Salado, Villarrica y Osorno, y el Campo de Hielo Sur."
+    />
+    <meta property="og:image" content="/og.jpg" />
+    <meta property="og:locale" content="es_CL" />
+    <meta property="og:locale:alternate" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preload" href="/relief/meta.json" as="fetch" crossorigin />
+    <script>
+      // ?reduced=1 must stop the CSS entrance too, before first paint.
+      if (/[?&]reduced=(1|true)/.test(location.search))
+        document.documentElement.dataset.reduced = ''
+    </script>
+  </head>
+  <body class="grano">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
