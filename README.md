@@ -220,8 +220,11 @@ npm run dev
 
 ### Deploying
 
-`vercel.json` is ready (Vite preset, `dist`, long cache for hashed assets and
-a week for the terrain files). No environment variables, no runtime.
+Live at **https://cordillera-chile.vercel.app** (`cordillera.vercel.app` was
+already taken by another account). The Vercel project `cordillera-chile` is
+connected to this repository, so every push to `main` deploys to production.
+`vercel.json` sets the Vite preset, `dist`, a long cache for hashed assets and
+a week for the terrain files. No environment variables, no runtime.
 
 ![Phone](docs/08-movil.jpg)
 ![Phone, Ojos del Salado](docs/09-movil-ojos.jpg)
