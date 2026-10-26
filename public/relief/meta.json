@@ -1,0 +1,19 @@
+{
+  "source": "AWS Terrain Tiles (Mapzen terrarium; SRTM, GMTED2010, ETOPO1), zoom 7",
+  "latNorth": -17.4,
+  "latSouth": -56,
+  "lonCentre": -71,
+  "halfWidthKm": 560,
+  "grids": {
+    "128": {
+      "w": 128,
+      "h": 491,
+      "kmPerPx": 8.75
+    },
+    "256": {
+      "w": 256,
+      "h": 982,
+      "kmPerPx": 4.375
+    }
+  }
+}
