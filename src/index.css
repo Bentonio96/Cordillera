@@ -135,20 +135,25 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* A word that rises out of its own line. Only transform animates. */
+  /* A word that rises out of its own line. Only transform animates.
+     At line-height 0.92 the glyphs overflow the line box by ~0.15em on each
+     side, so the mask is padded out to the font's real ascent and descent
+     (accents on top, g/j/y below) and the padding is given back with
+     negative margins: layout is unchanged, nothing is clipped at rest. The
+     inline padding leaves room for the 2° tilt the words rise with. */
   .linea-mascara {
     display: inline-block;
     overflow: hidden;
     vertical-align: top;
-    padding-bottom: 0.08em;
-    margin-bottom: -0.08em;
+    padding: 0.16em 0.06em 0.26em;
+    margin: -0.16em -0.06em -0.26em;
   }
 }
 
 /* The hero's entrance is CSS, so it plays before any JS arrives. */
 @keyframes subir {
   from {
-    transform: translateY(105%);
+    transform: translateY(140%);
   }
 }
 

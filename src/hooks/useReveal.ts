@@ -33,7 +33,7 @@ export function useReveal(
         const words = root.querySelectorAll('[data-rise]')
         if (words.length)
           gsap.from(words, {
-            yPercent: 110,
+            yPercent: 140,
             rotate: 2,
             duration: 1.4,
             stagger: 0.07,
