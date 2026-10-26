@@ -262,3 +262,13 @@ GVP's 6,879 m with a note that 6,893 m is the most quoted figure; Paine Grande
 at the 2011 GPS survey's 2,884 m with a note that CONAF still publishes
 3,050 m. The count of active volcanoes is SERNAGEOMIN's 2023 figure (87); older
 editions said 92.
+
+---
+
+## License
+
+The code is [MIT](LICENSE). The elevation data and the figures belong to
+their sources above and keep their own terms; the terrain files in
+`public/relief/` are derived from AWS Terrain Tiles, so credit them as the
+[Tilezen attribution](https://github.com/tilezen/joerd/blob/master/docs/attribution.md)
+asks if you reuse them.
