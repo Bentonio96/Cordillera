@@ -7,7 +7,7 @@ export function Header() {
   const { t, lang, setLang } = useLanguage()
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 flex items-center justify-between px-4 py-4 md:px-8 md:py-6">
+    <header className="fixed inset-x-0 top-0 z-40 flex items-center justify-between bg-[linear-gradient(to_bottom,rgb(10_11_13/0.92),rgb(10_11_13/0.7)_55%,transparent)] px-4 pt-4 pb-8 md:px-8 md:pt-6 md:pb-10">
       <a
         href="#contenido"
         onClick={(event) => {
